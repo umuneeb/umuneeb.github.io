@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Muneeb Ur Rehman — Backend Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0f14;
+      --surface: #13161d;
+      --border: #1e2230;
+      --accent: #4ade80;
+      --accent-dim: rgba(74, 222, 128, 0.08);
+      --text: #e4e8f0;
+      --muted: #6b7280;
+      --mono: 'IBM Plex Mono', monospace;
+      --sans: 'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1rem 2.5rem;
+      background: rgba(13, 15, 20, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-family: var(--mono);
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 6rem 2.5rem 4rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .hero-inner { width: 100%; }
+    .hero-tag {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 500px;
+      margin-bottom: 2.5rem;
+      line-height: 1.8;
+    }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      padding: 0.65rem 1.4rem;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #0d0f14;
+      border: 1px solid var(--accent);
+      font-weight: 500;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* SECTIONS */
+    section {
+      padding: 5rem 2.5rem;
+      max-width: 860px;
+      margin: 0 auto;
+      border-top: 1px solid var(--border);
+    }
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* SKILLS GRID */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1px;
+      border: 1px solid var(--border);
+      background: var(--border);
+    }
+    .skill-cell {
+      background: var(--surface);
+      padding: 1.2rem 1.4rem;
+    }
+    .skill-category {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.6rem;
+    }
+    .skill-items {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    /* EXPERIENCE */
+    .exp-list { display: flex; flex-direction: column; gap: 2rem; }
+    .exp-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.3rem 1rem;
+      padding: 1.4rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 4px;
+      transition: border-color 0.2s;
+    }
+    .exp-item:hover { border-color: var(--accent); }
+    .exp-role {
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+    .exp-date {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+    .exp-company {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      grid-column: 1 / -1;
+    }
+    .exp-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-top: 0.5rem;
+      grid-column: 1 / -1;
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1rem;
+    }
+    .project-card {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 1.5rem;
+      border-radius: 4px;
+      transition: border-color 0.2s, background 0.2s;
+      display: flex; flex-direction: column; gap: 0.8rem;
+    }
+    .project-card:hover {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+    .project-name {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+    .project-desc {
+      font-size: 0.83rem;
+      color: var(--muted);
+      line-height: 1.7;
+      flex: 1;
+    }
+    .project-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .tag {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--accent);
+      border: 1px solid rgba(74, 222, 128, 0.25);
+      padding: 0.2rem 0.5rem;
+      border-radius: 3px;
+      letter-spacing: 0.04em;
+    }
+
+    /* CONTACT */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1px;
+      border: 1px solid var(--border);
+      background: var(--border);
+    }
+    .contact-item {
+      background: var(--surface);
+      padding: 1.4rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .contact-item:hover { background: var(--accent-dim); }
+    .contact-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.4rem;
+    }
+    .contact-value {
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.2rem; }
+      .nav-links { gap: 1.2rem; }
+      .hero, section { padding-left: 1.2rem; padding-right: 1.2rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">muneeb.dev</div>
+  <ul class="nav-links">
+    <li><a href="#skills">skills</a></li>
+    <li><a href="#experience">exp</a></li>
+    <li><a href="#projects">projects</a></li>
+    <li><a href="#contact">contact</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Associate Software Engineer</div>
+    <h1>Muneeb<br>Ur <span>Rehman</span></h1>
+    <p class="hero-desc">
+      I build scalable backend systems with Python and FastAPI —
+      from RESTful APIs and cloud integrations to custom parsing engines
+      and automation platforms.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="mailto:umuneeb381@gmail.com" class="btn btn-secondary">Get in Touch</a>
+    </div>
+  </div>
+</div>
+
+<section id="skills">
+  <div class="section-label">Skills</div>
+  <div class="skills-grid">
+    <div class="skill-cell">
+      <div class="skill-category">Languages</div>
+      <div class="skill-items">Python<br>JavaScript<br>C / C++<br>Java / Kotlin</div>
+    </div>
+    <div class="skill-cell">
+      <div class="skill-category">Frameworks</div>
+      <div class="skill-items">FastAPI<br>Node.js<br>Express.js<br>React</div>
+    </div>
+    <div class="skill-cell">
+      <div class="skill-category">Databases</div>
+      <div class="skill-items">PostgreSQL<br>MySQL<br>MongoDB<br>Firebase</div>
+    </div>
+    <div class="skill-cell">
+      <div class="skill-category">Cloud & Tools</div>
+      <div class="skill-items">Google Cloud (GCP)<br>GitHub<br>Android Studio<br>Unity</div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-label">Experience</div>
+  <div class="exp-list">
+
+    <div class="exp-item">
+      <div class="exp-role">Associate Software Engineer (Python)</div>
+      <div class="exp-date">Jan 2026 – Present</div>
+      <div class="exp-company">Ivation · Valencia Town, Lahore</div>
+      <div class="exp-desc">
+        Leading backend development using Python, FastAPI, and PostgreSQL for an automation-driven platform.
+        Built a custom ANTLR-based command parsing engine for scalable Discord automation and dynamic role management.
+        Integrated Google Drive via GCP APIs and optimized database design and API performance.
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-role">Python Intern</div>
+      <div class="exp-date">Nov 2025 – Dec 2025</div>
+      <div class="exp-company">Ivation · Valencia Town, Lahore</div>
+      <div class="exp-desc">
+        Supported backend development and automation using Python and discord.py. Assisted in implementing onboarding workflows
+        and contributed to early-stage development of ezBot, focusing on API integration and database structuring.
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-role">Android Development Intern</div>
+      <div class="exp-date">Aug 2025 – Oct 2025</div>
+      <div class="exp-company">Ozi Technology · Arfa Software Technology Park, Lahore</div>
+      <div class="exp-desc">
+        Developed and maintained backend APIs using FastAPI to support multiple application modules.
+        Collaborated closely with the frontend team to deliver clean, well-structured API integrations.
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-role">Android Intern</div>
+      <div class="exp-date">Jun 2023 – Aug 2023</div>
+      <div class="exp-company">Ozi Technology · Arfa Software Technology Park, Lahore</div>
+      <div class="exp-desc">
+        Developed Android app interfaces using XML and Jetpack Compose, focusing on responsive layouts and clean UI design.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-label">Projects</div>
+  <div class="projects-grid">
+
+   
+
+    <div class="project-card">
+      <div class="project-name">Treasury Management System</div>
+      <div class="project-desc">
+        Modular financial platform with Payroll, Vendor Payments, and Budget Allocation modules.
+        Designed for real-time transaction processing, fund distribution, and financial tracking at scale.
+      </div>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">PostgreSQL</span>
+        <span class="tag">REST API</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-name">GIS Fire Incident Analysis</div>
+      <div class="project-desc">
+        Spatial data analysis using GeoPandas and PySAL to identify fire hotspots in Chapel Hill.
+        Applied spatial regression and buffer analysis to evaluate fire station coverage gaps.
+      </div>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">GeoPandas</span>
+        <span class="tag">PySAL</span>
+        <span class="tag">GIS</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-name">Fruit Ninja Clone</div>
+      <div class="project-desc">
+        An engaging fruit slicer game built in Unity and C# with timer mechanics, scoring system,
+        and polished gameplay feel.
+      </div>
+      <div class="project-tags">
+        <span class="tag">Unity</span>
+        <span class="tag">C#</span>
+        <span class="tag">Game Dev</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-label">Contact</div>
+  <div class="contact-grid">
+    <a href="mailto:umuneeb381@gmail.com" class="contact-item">
+      <div class="contact-label">Email</div>
+      <div class="contact-value">umuneeb381@gmail.com</div>
+    </a>
+    <a href="https://linkedin.com/in/-muneeb-ur-rehman" target="_blank" class="contact-item">
+      <div class="contact-label">LinkedIn</div>
+      <div class="contact-value">linkedin.com/in/-muneeb-ur-rehman</div>
+    </a>
+    <a href="https://github.com/YOUR_GITHUB_USERNAME" target="_blank" class="contact-item">
+      <div class="contact-label">GitHub</div>
+      <div class="contact-value">github.com/your-username</div>
+    </a>
+    <div class="contact-item">
+      <div class="contact-label">Location</div>
+      <div class="contact-value">Lahore, Pakistan</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  built by muneeb ur rehman · 2026
+</footer>
+
+</body>
+</html>
